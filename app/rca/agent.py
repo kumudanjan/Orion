@@ -103,7 +103,7 @@ Respond in this exact JSON format for each step:
 Always respond ONLY in the following JSON structure:
 
 {
-  "Root Cause of Anamoly": string,
+  "Root Cause of the Anomaly": string,
   "Recommended Fix": string
 }
 

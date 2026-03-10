@@ -8,7 +8,7 @@ from app.observability.metrics import get_metrics, Timer
 def render_log_upload():
     st.header("📥 Log Ingestion & Parsing")
     st.markdown(
-        "Upload log files (plain text, JSON/NDJSON, Apache/Nginx, syslog, OpenTelemetry). "
+        "Upload log files (plain text, JSON/NDJSON, Apache/Nginx, syslog). "
         "Logs are auto-parsed, PII-scrubbed, chunked, and indexed into the vector store."
     )
 
@@ -26,7 +26,6 @@ def render_log_upload():
             "- Plain text / syslog\n"
             "- JSON / NDJSON\n"
             "- Apache Combined Log\n"
-            "- OpenTelemetry JSON\n"
         )
 
     # Demo data option
