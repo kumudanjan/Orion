@@ -11,6 +11,8 @@ It ensures:
   2. .env file is loaded early     (fixes LLM / API key issues)
 """
 
+print("run_app started")
+
 import sys
 import os
 from pathlib import Path
