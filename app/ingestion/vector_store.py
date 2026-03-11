@@ -2,7 +2,7 @@
 Vector Store Abstraction
 Supports ChromaDB (local, default) and Azure AI Search (cloud)
 """
-
+import streamlit as st
 import logging
 from typing import List, Dict, Any, Optional
 from app.config import CONFIG
@@ -134,8 +134,7 @@ class AzureSearchBackend:
 _store: Optional[VectorStore] = None
 
 
+@st.cache_resource
 def get_vector_store() -> VectorStore:
-    global _store
-    if _store is None:
-        _store = VectorStore()
-    return _store
+    return VectorStore()
+
