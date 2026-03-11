@@ -119,8 +119,24 @@ def ingest_sop_document(text: str, title: str = "SOP") -> int:
     Splits by paragraph, embeds, and upserts.
     """
     store = get_vector_store()
-    paragraphs = [p.strip() for p in text.split("\n\n") if p.strip()]
-    chunks = [{"text": p, "metadata": {"title": title, "type": "sop"}} for p in paragraphs]
-    count = store.upsert(chunks, collection="sops")
-    logger.info("Ingested %d SOP chunks for '%s'", count, title)
-    return count
+    chunk_size = 1000
+    overlap = 100
+    max_chunks = 100
+    text_chunks = []
+    start = 0
+    while (start < len(text) ):
+        end = start + chunk_size
+        chunk = text[start:end].strip()
+        if chunk:
+            text_chunks.append(chunk)
+            start+=chunk_size - overlap
+        if len(text_chunks)>=max_chunks:
+            break
+    chunks = [{"text":c,"metadata":{"title":title,"type":"sop"}}for c in text_chunks]
+    batch_size = 25
+    total = 0
+    for i in range(0,len(chunks),batch_size):
+        batch = chunks[i:i+batch_size]
+        total += store.upsert(batch,collection="sops")
+    logger.info("Ingested %d SOP chunks for '%s'", total, title)
+    return total
